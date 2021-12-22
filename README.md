@@ -2,9 +2,7 @@
 
 ## Why this project
 
-Here are the goals of this project and how we'll measure its success.
-
-- 
+This repository is used to demonstrate examples for how to leverage the different space egress types on cloud.gov.
 
 ## Contributing
 
