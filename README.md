@@ -19,8 +19,8 @@ This example demonstrates one way of leveraging the space egress types on cloud.
 
 ## Pros & cons to this approach
 
-* Using a proxy on an internal route allows for granular control over which applications may access it using network policies.
-* Using an internal route allows Docker image to use non-standard port (by default squid runs on port 3128). 
+* Using a proxy on an internal route allows for granular control over which applications may access it using [network policies](https://docs.cloudfoundry.org/devguide/deploy-apps/cf-networking.html#create-policies).
+* Using an internal route allows Docker image to use [non-standard port](https://cloud.gov/docs/deployment/docker/#using-non-standard-ports-in-docker-containers) (by default squid runs on port 3128). 
 * Additional steps required to make changes when needed and repush Docker image, and redeploy app.
 * Potentially some additional compliance burden from using Docker image [over buildpack](https://github.com/cloud-gov/space-egress-examples/issues/3).
 
