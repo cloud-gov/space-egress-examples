@@ -17,6 +17,14 @@ This example demonstrates one way of leveraging the space egress types on cloud.
 * The squid proxy is configured to only allow access to specific domains via an access control list (ACL) directive.
 * A network policy is created to allow the Node.js application to connect to the squid proxy. Because the proxy is running on an internal route, we can ensure that only the Node.js application can access it.
 
+## Deploying this demo
+
+1. Configure squid & build [Docker image](docker)
+2. Push Docker image to repo.
+3. Deploy [proxy app](proxy) in public egress space on internal route.
+4. Deploy [demo app](app) to restricted / closed egress space.
+5. Set up network policy to allow demo app to route traffic through proxy.
+
 ## Pros & cons to this approach
 
 * Using a proxy on an internal route allows for granular control over which applications may access it using [network policies](https://docs.cloudfoundry.org/devguide/deploy-apps/cf-networking.html#create-policies).
