@@ -2,7 +2,27 @@
 
 ## Why this project
 
-This repository is used to demonstrate examples for how to leverage the different space egress types on cloud.gov.
+**Note - this work is still in progress.**
+
+This repository is used to provide examples for how to leverage the different [space egress types](https://cloud.gov/docs/management/space-egress/) on cloud.gov.
+
+## Example overview
+
+This example demonstrates one way of leveraging the space egress types on cloud.gov to more securely run an application that needs to respond to requests, and access resources at specific location on the open web or artifacts in an S3 bucket. 
+
+![Egress application example](egress-app-example.jpg)
+
+* The application (in this case a simple Node.js application) runs in a restricted egress space. 
+* A Docker image running squid proxy runs in a public egress space, on an internal route.
+* The squid proxy is configured to only allow access to specific domains via an access control list (ACL) directive.
+* A network policy is created to allow the Node.js application to connect to the squid proxy. Because the proxy is running on an internal route, we can ensure that only the Node.js application can access it.
+
+## Pros & cons to this approach
+
+* Using a proxy on an internal route allows for granular control over which applications may access it using network policies.
+* Using an internal route allows Docker image to use non-standard port (by default squid runs on port 3128). 
+* Additional steps required to make changes when needed and repush Docker image, and redeploy app.
+* Some additional compliance burden from using Docker image over buildpack.
 
 ## Contributing
 

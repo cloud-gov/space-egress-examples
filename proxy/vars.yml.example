@@ -1,0 +1,3 @@
+name: my-proxy-app
+route: my-proxy-app.apps.internal
+image: repo/image:tag
