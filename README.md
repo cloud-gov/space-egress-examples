@@ -10,7 +10,7 @@ This repository is used to provide examples for how to leverage the different [s
 
 This example demonstrates one way of leveraging the space egress types on cloud.gov to more securely run an application that needs to respond to requests, and access resources at specific location on the open web or artifacts in an S3 bucket. 
 
-![Egress application example](egress-app-example.jpg)
+![Egress application example](egress-app-example.jpg?raw=true "Egress application example")
 
 * The application (in this case a simple Node.js application) runs in a restricted egress space. 
 * A Docker image running squid proxy runs in a public egress space, on an internal route.
