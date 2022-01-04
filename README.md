@@ -22,7 +22,7 @@ This example demonstrates one way of leveraging the space egress types on cloud.
 * Using a proxy on an internal route allows for granular control over which applications may access it using network policies.
 * Using an internal route allows Docker image to use non-standard port (by default squid runs on port 3128). 
 * Additional steps required to make changes when needed and repush Docker image, and redeploy app.
-* Some additional compliance burden from using Docker image over buildpack.
+* Potentially some additional compliance burden from using Docker image [over buildpack](https://github.com/cloud-gov/space-egress-examples/issues/3).
 
 ## Contributing
 
