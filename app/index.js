@@ -52,16 +52,20 @@ app.get('/', (req, res) => {
 
 // Route to request resource through proxy.
 app.get('/proxy/:file', (req, res) => {
-    const opts = defaultOpts;
-    opts.agent = new ProxyAgent(proxyUri);
-    opts.path = `/${getBucketName()}/${req.params.file}`;
+    const opts = {
+        ...defaultOpts,
+        agent: new ProxyAgent(proxyUri),
+        path: `/${getBucketName()}/${req.params.file}`
+    }
     makeGetRequest(opts, res);
 });
 
 // Route that bypasses proxy.
 app.get('/noproxy/:file', (req, res) => {
-    const opts = defaultOpts;
-    opts.path = `/${req.params.file}`;
+    const opts = {
+        ...defaultOpts,
+        path: `/${getBucketName()}/${req.params.file}`
+    }
     makeGetRequest(opts, res);
     res.end();
 });
