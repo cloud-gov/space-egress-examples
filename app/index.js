@@ -6,7 +6,7 @@ const cfenv = require('cfenv');
 const proxyUri = process.env.proxyUri;
 
 // Get S3 Bucket name from bound service.
-getBucketName = () => {
+const getBucketName = () => {
     let appEnv = cfenv.getAppEnv();
     let services =  appEnv.getServices();
     let s3 = services["egress-test-s3"]; // Or whatever you named your service. 
