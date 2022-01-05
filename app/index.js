@@ -29,7 +29,7 @@ let opts = {
 };
 
 // Helper method to make HTTP request.
-makeGetRequest = (opts, res) => {
+const makeGetRequest = (opts, res) => {
     request = https.request(opts, (response) => {
         if (response.statusCode != 200) {
             res.send(`Unable to access that resource: ${response.statusCode}`);
