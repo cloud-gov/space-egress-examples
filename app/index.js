@@ -1,22 +1,31 @@
 const https = require('https');
 const ProxyAgent = require('proxy-agent');
+const cfenv = require('cfenv');
 
 // URL of proxy app.
-const proxyUri = 'http://test-egress-rules-proxy.apps.internal:3128';
+const proxyUri = process.env.proxyUri;
 
+// Get S3 Bucket name from bound service.
+getBucketName = () => {
+    let appEnv = cfenv.getAppEnv();
+    let services =  appEnv.getServices();
+    let s3 = services["egress-test-s3"]; // Or whatever you named your service. 
+    return s3.credentials.bucket;
+}
+
+// Run express
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 5000;
-
 app.listen(port, () => {
     console.log(`Example app listening at port: ${port}`);
 });
 
-// Request options.
+// HTTPS request options.
 let opts = {
     method: 'GET',
+    host: 's3-us-gov-west-1.amazonaws.com',
     port: 443,
-    path: '/'
 };
 
 // Helper method to make HTTP request.
@@ -26,6 +35,7 @@ makeGetRequest = (opts, res) => {
             res.send(`Unable to access that resource: ${response.statusCode}`);
         }
         else {
+            res.set('Content-Type', 'image/png');
             response.pipe(res);
         }
     });
@@ -41,16 +51,16 @@ app.get('/', (req, res) => {
 });
 
 // Route to request resource through proxy.
-app.get('/proxy/:host', (req, res) => {
+app.get('/proxy/:file', (req, res) => {
     opts.agent = new ProxyAgent(proxyUri);
-    opts.host = req.params.host;
+    opts.path = `/${getBucketName()}/${req.params.file}`;
     makeGetRequest(opts, res);
 });
 
 // Route that bypasses proxy.
-app.get('/noproxy/:host', (req, res) => {
+app.get('/noproxy/:file', (req, res) => {
     delete opts.agent;
-    opts.host = req.params.host;
+    opts.path = `/${req.params.file}`;
     makeGetRequest(opts, res);
     res.end();
 });
