@@ -52,4 +52,5 @@ app.get('/noproxy/:host', (req, res) => {
     delete opts.agent;
     opts.host = req.params.host;
     makeGetRequest(opts, res);
+    res.end();
 });
