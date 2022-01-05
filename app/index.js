@@ -8,7 +8,7 @@ const proxyUri = process.env.proxyUri;
 // Get S3 Bucket name from bound service.
 const getBucketName = () => {
     let appEnv = cfenv.getAppEnv();
-    let services =  appEnv.getServices();
+    let services = appEnv.getServices();
     let s3 = services["egress-test-s3"]; // Or whatever you named your service. 
     return s3.credentials.bucket;
 }
@@ -21,8 +21,8 @@ app.listen(port, () => {
     console.log(`Example app listening at port: ${port}`);
 });
 
-// HTTPS request options.
-let opts = {
+// Default HTTPS request options.
+let defaultOpts = {
     method: 'GET',
     host: 's3-us-gov-west-1.amazonaws.com',
     port: 443,
@@ -52,6 +52,7 @@ app.get('/', (req, res) => {
 
 // Route to request resource through proxy.
 app.get('/proxy/:file', (req, res) => {
+    const opts = defaultOpts;
     opts.agent = new ProxyAgent(proxyUri);
     opts.path = `/${getBucketName()}/${req.params.file}`;
     makeGetRequest(opts, res);
@@ -59,7 +60,7 @@ app.get('/proxy/:file', (req, res) => {
 
 // Route that bypasses proxy.
 app.get('/noproxy/:file', (req, res) => {
-    delete opts.agent;
+    const opts = defaultOpts;
     opts.path = `/${req.params.file}`;
     makeGetRequest(opts, res);
     res.end();
