@@ -1,0 +1,9 @@
+---
+applications:
+- name: ((name))
+  routes: 
+    - route: ((route))
+  docker:
+    image: ((image))
+  memory: 1G
+  health-check-type: process
