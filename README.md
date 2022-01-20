@@ -2,9 +2,9 @@
 
 ## Why this project
 
-**Note - this work is still in progress.**
-
 This repository is used to provide examples for how to leverage the different [space egress types](https://cloud.gov/docs/management/space-egress/) on cloud.gov.
+
+Note - another egress proxy example [can be found here](https://github.com/GSA/cg-egress-proxy).
 
 ## Example overview
 
